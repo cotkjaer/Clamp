@@ -9,28 +9,52 @@
 import XCTest
 @testable import Clamp
 
-class ClampTests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+class ClampTests: XCTestCase
+{
+    func test_clamp()
+    {
+        var integer : Int = 3
+        
+        integer.clamp(2, 5)
+        
+        XCTAssertEqual(integer, 3)
+        
+        integer.clamp(5, 7)
+        
+        XCTAssertEqual(integer, 5)
+        
+        integer.clamp(-10, 1)
+        
+        XCTAssertEqual(integer, 1)
     }
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+    func test_clamped()
+    {
+        let double : Double = 3
+        
+        XCTAssertEqual(double.clamped(2, 5), 3)
+        
+        XCTAssertEqual(double.clamped(5, 7), 5)
+        
+        XCTAssertEqual(double.clamped(-10, 1), 1)
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func test_static_clamp()
+    {
+        let float : Float = 4
+        
+        XCTAssertEqual(clamp(float, lower: 2, upper: 3), 3)
+        
+        XCTAssertEqual(clamp(float, lower: 5, upper: 10), 5)
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
+    func test_range()
+    {
+        XCTAssertEqual(5.clamped(3...4), 4)
+        XCTAssertEqual(2.clamped(3...4), 3)
+        
+        let clamped = (3...4).clamp(2)
+        
+        XCTAssertEqual(clamped, 3)
     }
-    
 }

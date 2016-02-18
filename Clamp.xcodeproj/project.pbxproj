@@ -10,6 +10,7 @@
 		8FD873D11C760B5600181FA6 /* Clamp.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FD873D01C760B5600181FA6 /* Clamp.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8FD873D81C760B5600181FA6 /* Clamp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FD873CD1C760B5600181FA6 /* Clamp.framework */; };
 		8FD873DD1C760B5600181FA6 /* ClampTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD873DC1C760B5600181FA6 /* ClampTests.swift */; };
+		8FD873E81C760B6300181FA6 /* Clamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD873E71C760B6300181FA6 /* Clamp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		8FD873D71C760B5600181FA6 /* ClampTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClampTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FD873DC1C760B5600181FA6 /* ClampTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClampTests.swift; sourceTree = "<group>"; };
 		8FD873DE1C760B5600181FA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8FD873E71C760B6300181FA6 /* Clamp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clamp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 		8FD873CF1C760B5600181FA6 /* Clamp */ = {
 			isa = PBXGroup;
 			children = (
+				8FD873E71C760B6300181FA6 /* Clamp.swift */,
 				8FD873D01C760B5600181FA6 /* Clamp.h */,
 				8FD873D21C760B5600181FA6 /* Info.plist */,
 			);
@@ -194,6 +197,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FD873E81C760B6300181FA6 /* Clamp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +312,7 @@
 		8FD873E21C760B5600181FA6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -318,12 +323,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.silverback-it.Clamp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		8FD873E31C760B5600181FA6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
