@@ -17,8 +17,8 @@
 
 - returns: `value` clamped to the given range; `[lower;upper]`
 */
-@warn_unused_result
-public func clamp<T: Comparable>(value: T?, lower: T? = nil, upper: T? = nil) -> T?
+
+public func clamp<T: Comparable>(_ value: T?, lower: T? = nil, upper: T? = nil) -> T?
 {
     return value?.clamped(lower: lower, upper: upper)
 }
@@ -31,8 +31,8 @@ public func clamp<T: Comparable>(value: T?, lower: T? = nil, upper: T? = nil) ->
  
  - returns: `value` clamped to the given range; `[lower;upper]`
  */
-@warn_unused_result
-public func clamp<T: Comparable>(value: T?, range: Range<T>?) -> T?
+
+public func clamp<T: Comparable>(_ value: T?, range: ClosedRange<T>?) -> T?
 {
     return value?.clamped(range)
 }
@@ -48,8 +48,8 @@ public extension Comparable
      
      - returns: `self` clamped to the given range; `[lower;upper]`
      */
-    @warn_unused_result
-    func clamped(lower: Self, _ upper: Self) -> Self
+    
+    func clamped(_ lower: Self, _ upper: Self) -> Self
     {
         guard upper >= lower else { return self }
         
@@ -60,7 +60,7 @@ public extension Comparable
         return self
     }
     
-    func clamped(lower lower: Self? = nil, upper: Self? = nil) -> Self
+    func clamped(lower: Self? = nil, upper: Self? = nil) -> Self
     {
         if let upper = upper
         {
@@ -81,59 +81,134 @@ public extension Comparable
      - parameter lower: minimum value
      - parameter upper: maximum value
      */
-    mutating func clamp(lower: Self, _ upper: Self)
+    mutating func clamp(_ lower: Self, _ upper: Self)
     {
         self = clamped(lower, upper)
     }
+
+    // MARK: - Ranges
+    
+    /**
+     `self` clamped to a given range.
+     
+     - parameter range: (optional) clamping range
+     
+     - returns: `self` clamped to the given range; `[lowerBound;upperBound]` or `self` if range is `nil`
+     */
+    func clamped(_ range: ClosedRange<Self>?) -> Self
+    {
+        guard let range = range else { return self }
+        
+        return clamped(range.lowerBound, range.upperBound)
+    }
+
+    /**
+     Clamps `self` to a specified range; `[lowerBound;upperBound[`
+     
+     - parameter range: (optional) clamping range
+     */
+    mutating func clamp(_ range: ClosedRange<Self>?)
+    {
+        self = clamped(range)
+    }
 }
 
-// MARK: - ForwardIndexType
+// MARK: - <#comment#>
 
-extension ForwardIndexType where Self : Comparable
+extension Strideable where Self.Stride: SignedInteger
 {
     /**
      `self` clamped to a given range.
      
      - parameter range: (optional) clamping range
      
-     - returns: `self` clamped to the given range; `[startIndex;endIndex[` or `self` if range is `nil`
+     - returns: `self` clamped to the given range; `[lowerBound;upperBound[` or `self` if range is `nil`
      */
-    func clamped(range: Range<Self>?) -> Self
+    func clamped(_ range: CountableClosedRange<Self>?) -> Self
     {
-        if let range = range
-        {
-            return clamped(range.startIndex, range.endIndex.advancedBy(-1))
-        }
+        guard let range = range else { return self }
         
-        return self
+        return clamped(range.lowerBound, range.upperBound)
     }
-
+    
     /**
-     Clamps `self` to a specified range; `[startIndex;endIndex[`
+     `self` clamped to a given range.
+     
+     - parameter range: (optional) clamping range
+     
+     - returns: `self` clamped to the given range; `[lowerBound;upperBound[` or `self` if range is `nil`
+     */
+    func clamped(_ range: CountableRange<Self>?) -> Self
+    {
+        guard let range = range else { return self }
+        
+        let closedRange = CountableClosedRange(range)
+        
+        return clamped(closedRange)
+        
+//        return clamped(range.lowerBound, range.upperBound.advanced(by: -1))
+    }
+    
+    /**
+     Clamps `self` to a specified range; `[lowerBound;upperBound[`
      
      - parameter range: (optional) clamping range
      */
-    mutating func clamp(range: Range<Self>?)
+    mutating func clamp(_ range: CountableRange<Self>?)
     {
         self = clamped(range)
+    }
+
+}
+
+
+// MARK: - <#comment#>
+
+extension CountableRange
+{
+    /**
+     Clamps `element` to `self`; `[lowerBound;upperBound[`
+     
+     - parameter element: (optional) index to be clamped
+     
+     - returns: an element that is within `self`
+     */
+    func clamp(_ e: Element?) -> Element?
+    {
+        return e?.clamped(lowerBound, upperBound.advanced(by:-1))
+    }
+}
+
+
+extension CountableClosedRange
+{
+    /**
+     Clamps `element` to `self`; `[lowerBound;upperBound]`
+     
+     - parameter element: (optional) index to be clamped
+     
+     - returns: an element that is within `self`
+     */
+    func clamp(_ element: Element?) -> Element?
+    {
+        return element?.clamped(lowerBound, upperBound)
     }
 }
 
 // MARK: - Range
 
-extension Range where Element : Comparable
+extension ClosedRange where Bound : Comparable
 {
     /**
-     Clamps `index` to `self`; `[startIndex;endIndex[`
+     Clamps `element` to `self`; `[lowerBound;upperBound]`
      
-     - parameter index: (optional) index to be clamped
+     - parameter element: (optional) index to be clamped
      
-     - returns: an index that is within `self`
+     - returns: an element that is within `self`
      */
-    @warn_unused_result
-    public func clamp(index: Element?) -> Element?
+    public func clamp(_ element: Bound?) -> Bound?
     {
-        return index?.clamped(self)
+        return element?.clamped(self)
     }
 }
 

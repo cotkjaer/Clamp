@@ -126,13 +126,32 @@ class ClampTests: XCTestCase
         XCTAssertEqual(clamp(float, lower: nil, upper: 10), float)
     }
     
+    let lowercaseLetters = Character("a")...Character("z")
+    let uppercaseLetters = Character("A")...Character("Z")
+
     func test_range()
     {
-        XCTAssertEqual(5.clamped(3...4), 4)
-        XCTAssertEqual(2.clamped(3...4), 3)
+        /// CountableClosedRange
+        XCTAssertEqual(1236.clamped(3...100), 100)
+        XCTAssertEqual(2.clamped(3...100), 3)
+        XCTAssertEqual(55.clamped(3...100), 55)
         
-        let clamped = (3...4).clamp(2)
+        XCTAssertEqual((-100...100).clamp(2), 2)
+        XCTAssertEqual((-100...100).clamp(-1022), -100)
+        XCTAssertEqual((-100...100).clamp(22213), 100)
         
-        XCTAssertEqual(clamped, 3)
+        // CountableRange
+        XCTAssertEqual((2..<5).clamp(10), 4)
+        XCTAssertEqual((2..<5).clamp(1), 2)
+        XCTAssertEqual((2..<5).clamp(3), 3)
+        
+        XCTAssertEqual(lowercaseLetters.clamp(Character("q")), Character("q"))
+        XCTAssertEqual(lowercaseLetters.clamp(Character("1")), Character("a"))
+        XCTAssertEqual(uppercaseLetters.clamp(Character("a")), Character("Z"))
+        
+        
+        //NOTE: there seems to be a bug in the way Characters are compared
+        XCTAssertNotEqual(lowercaseLetters.clamp(Character("å")), Character("z"))
+        
     }
 }
