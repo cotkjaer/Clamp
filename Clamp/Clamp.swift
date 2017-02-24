@@ -9,15 +9,14 @@
 // MARK: - Comparable
 
 /**
-`value` clamped to a given range.
-
-- parameter value: (optional) value to be clamped
-- parameter lower: minimum value
-- parameter upper: maximum value
-
-- returns: `value` clamped to the given range; `[lower;upper]`
-*/
-
+ `value` clamped to a given range.
+ 
+ - parameter value: (optional) value to be clamped
+ - parameter lower: minimum value
+ - parameter upper: maximum value
+ 
+ - returns: `value` clamped to the given range; `[lower;upper]`
+ */
 public func clamp<T: Comparable>(_ value: T?, lower: T? = nil, upper: T? = nil) -> T?
 {
     return value?.clamped(lower: lower, upper: upper)
@@ -31,7 +30,6 @@ public func clamp<T: Comparable>(_ value: T?, lower: T? = nil, upper: T? = nil) 
  
  - returns: `value` clamped to the given range; `[lower;upper]`
  */
-
 public func clamp<T: Comparable>(_ value: T?, range: ClosedRange<T>?) -> T?
 {
     return value?.clamped(range)
@@ -85,7 +83,7 @@ public extension Comparable
     {
         self = clamped(lower, upper)
     }
-
+    
     // MARK: - Ranges
     
     /**
@@ -101,7 +99,7 @@ public extension Comparable
         
         return clamped(range.lowerBound, range.upperBound)
     }
-
+    
     /**
      Clamps `self` to a specified range; `[lowerBound;upperBound[`
      
@@ -146,7 +144,7 @@ extension Strideable where Self.Stride: SignedInteger
         
         return clamped(closedRange)
         
-//        return clamped(range.lowerBound, range.upperBound.advanced(by: -1))
+        //        return clamped(range.lowerBound, range.upperBound.advanced(by: -1))
     }
     
     /**
@@ -158,7 +156,7 @@ extension Strideable where Self.Stride: SignedInteger
     {
         self = clamped(range)
     }
-
+    
 }
 
 
